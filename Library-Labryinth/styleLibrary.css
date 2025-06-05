@@ -1,0 +1,63 @@
+body {
+  font-family: Arial, sans-serif;
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  text-align: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #ffffff;
+}
+
+header {
+  display: flex;
+  flex-direction: column; /* Align text and buttons vertically */
+  justify-content: center; /* Center content vertically */
+  align-items: center; /* Center content horizontally */
+  text-align: center;
+}
+
+.container {
+  display: flex;
+  justify-content: center; /* Ensure buttons are centered within container */
+  align-items: center;
+  margin-top: 20px; /* Add some space between text and buttons */
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center; /* Center the buttons in the column */
+}
+
+button {
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  background-color: #4c00ff;
+  color: #fff;
+  transition: background-color 0.3s;
+  width: 220px; /* Set a fixed width */
+}
+
+button:hover {
+  background-color: #011b8f;
+}
+
+.pixelify-sans-bold {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.pixelify-sans-light {
+  font-family: "Pixelify Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  color: #000000;
+}

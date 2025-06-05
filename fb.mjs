@@ -64,7 +64,6 @@ function fb_initialise() {
     const app = initializeApp(firebaseConfig);
     const firebaseGameDB = getDatabase(app);
     console.info(firebaseGameDB);
-    document.getElementById("p_fbInitialise").innerHTML = "Initialised";
 }
 
 function fb_authenticate() {
@@ -88,7 +87,6 @@ function fb_authenticate() {
             console.log("ERROR!!!!!!!!");
 
         });
-    document.getElementById("p_fbAuthenticate").innerHTML = "Authentication success";
 }
 
 function fb_detectLoginChange() {
@@ -113,7 +111,6 @@ function fb_detectLoginChange() {
         //❌ Code for an onAuthStateChanged error goes here
 
     });
-    document.getElementById("p_fbdetectLoginChange").innerHTML = "Login change detected";
 }
 function fb_logout() {
     console.log('%c fb_logout(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -130,7 +127,6 @@ function fb_logout() {
             //❌ Code for a logout error goes here
 
         });
-    document.getElementById("p_fblogout").innerHTML = "Logged out";
 }
 
 /*function fb_WriteRec() {
@@ -156,7 +152,6 @@ function fb_logout() {
     }).catch((error) => {
         console.log("fail Writing")
     });
-    document.getElementById("p_fbWriteRec").innerHTML = "record written";
 }*/
 
 function fb_WriteRec() {
@@ -176,7 +171,6 @@ function fb_WriteRec() {
          console.log(error);
 
     });
-    document.getElementById("p_fbWriteRec").innerHTML = "record written";
 }
 
 function fb_ReadRec() {
@@ -207,7 +201,6 @@ function fb_ReadRec() {
         console.log(fb_data);
 
     });
-    document.getElementById("p_fbReadRec").innerHTML = "record read";
 }
 
 function fb_ReadAll() {
@@ -238,7 +231,6 @@ function fb_ReadAll() {
         console.log("error not read all");
         console.log(fb_data);
     });
-    document.getElementById("p_fbReadAll").innerHTML = "read all";
 }
 
 /*function fb_ReadRec() {
@@ -269,7 +261,6 @@ function fb_ReadAll() {
         console.log(fb_data);
 
     });
-    document.getElementById("p_fbReadRec").innerHTML = "record read";
 }*/
 
 /*function fb_ReadAll() {
@@ -300,7 +291,6 @@ function fb_ReadAll() {
         console.log("error not read all");
         console.log(fb_data);
     });
-    document.getElementById("p_fbReadAll").innerHTML = "read all";
 }*/
 
 function fb_UpdateRec() {
@@ -318,8 +308,6 @@ function fb_UpdateRec() {
 
     });
 
-
-    document.getElementById("p_fbUpdateRec").innerHTML = "Record updated";
 }
 
 function fb_ReadSorted() {
@@ -362,7 +350,6 @@ function fb_ReadSorted() {
         //❌ Code for a sorted read error goes here
         console.log("Sorting failed");
     });
-    document.getElementById("p_fbReadSorted").innerHTML = "Data Sorted";
 
 }
 
@@ -389,7 +376,6 @@ function fb_Listen() {
         }
 
     });
-    document.getElementById("p_fbListen").innerHTML = "Listened";
 
 }
 
@@ -408,67 +394,6 @@ function fb_DeleteRec() {
 
         //❌ Code for a delete error goes here
         console.log("ERROR: DeleteRec")
-
-    });
-    document.getElementById("p_fbDeleteRec").innerHTML = "Record Deleted";
-
-}
-
-function fb_WreckHavoc() {
-    console.log("Wrecking havoc");
-    console.log('%c fb_WreckHavoc(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const firebaseConfig =
-    {
-        apiKey: "AIzaSyCwPibZHntricqhOchcdlX3H7ve_CFQhR0",
-        authDomain: "comp-2025-caleb-lowe-31f01.firebaseapp.com",
-        databaseURL: "https://comp-2025-caleb-lowe-31f01-default-rtdb.firebaseio.com",
-        projectId: "comp-2025-caleb-lowe-31f01",
-        storageBucket: "comp-2025-caleb-lowe-31f01.firebasestorage.app",
-        messagingSenderId: "440676386005",
-        appId: "1:440676386005:web:05b4cb8a914c0ceb0ace5c",
-        measurementId: "G-WGYBNEYVY3"
-    };
-    // Initialize Firebase
-    const app = initializeApp(firebaseConfig);
-    const firebaseGameDB = getDatabase(app);
-
-    var dbReference= ref(firebaseGameDB, "Test/UID");
-
-    get(dbReference).then((snapshot) => {
-
-        var fb_data = snapshot.val();
-
-        if (fb_data != null) {
-
-            //✅ Code for a successful read all goes here
-            console.log("Successfully read all");
-            console.log(fb_data);
-        } else {
-
-            //✅ Code for no record found goes here
-            console.log("no record");
-            console.log(fb_data);
-
-        }
-
-    }).catch((error) => {
-
-        //❌ Code for a read all error goes here
-        console.log("error not read all");
-        console.log(fb_data);
-    });
-    dbReference= ref(firebaseGameDB, "/");
-
-    set(dbReference, {Message:"You didn't protect your database! :)"}).then(() => {
-
-        //✅ Code for a successful write goes here
-        console.log("success write");
-
-    }).catch((error) => {
-
-        //❌ Code for a write error goes here
-         console.log("fail write");
-         console.log(error);
 
     });
 
