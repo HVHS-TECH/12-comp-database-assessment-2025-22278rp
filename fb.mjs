@@ -20,32 +20,16 @@ var userId = null;
 // Import all the methods you want to call from the firebase modules
 import { initializeApp }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getDatabase }
+import { getDatabase, ref, set, get, update, query, orderByChild, limitToFirst, onValue, remove }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup }
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { onAuthStateChanged }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { signOut }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
-import { ref, set }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-import { get }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-import { update }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-import { query, orderByChild, limitToFirst }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-import { onValue }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
-import { remove }
-    from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 
 /**************************************************************/
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_UpdateRec, fb_ReadSorted, fb_WreckHavoc, fb_Listen, fb_DeleteRec }
+export { fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_UpdateRec, fb_ReadSorted, fb_Listen, fb_DeleteRec }
 
 function fb_initialise() {
     console.log('%c fb_initialise(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -129,7 +113,7 @@ function fb_logout() {
         });
 }
 
-/*function fb_WriteRec() {
+function fb_WriteRec() {
      if (!currentUser) {
         alert("You must be logged in to submit the form.");
         return;
@@ -137,103 +121,20 @@ function fb_logout() {
     console.log('%c fb_WriteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     var name = document.getElementById("name").value;
-    var favoriteMovie = document.getElementById("favoriteMovie").value;
-    var movieQuantity = document.getElementById("movieQuantity").value;
 
     // Add additional fields here as needed
     
     const dbReference= ref(DB, 'Test/UID/' + userId);
     set(dbReference, {
         Name: name,
-        FavoriteMovie: favoriteMovie,
-        MovieQuantity: movieQuantity
     }).then(() => {
         console.log("Write successful!")
     }).catch((error) => {
         console.log("fail Writing")
     });
-}*/
-
-function fb_WriteRec() {
-    console.log('%c fb_WriteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    const dbReference= ref(DB, "Test/Userdata");
-
-    set(dbReference, {Location: "pool", Name: "Jeff", Cuteness: 100}).then(() => {
-
-        //✅ Code for a successful write goes here
-        console.log("success write");
-
-    }).catch((error) => {
-
-        //❌ Code for a write error goes here
-         console.log("fail write");
-         console.log(error);
-
-    });
 }
 
 function fb_ReadRec() {
-    console.log('%c fb_ReadRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    const dbReference= ref(DB, "Test/Userdata/Name");
-
-    get(dbReference).then((snapshot) => {
-
-        var fb_data = snapshot.val();
-
-        if (fb_data != null) {
-
-            //✅ Code for a successful read goes here
-            console.log("successful read");
-            console.log(fb_data);
-        } else {
-
-            //✅ Code for no record found goes here
-            console.log("no record found");
-            console.log(fb_data);
-        }
-
-    }).catch((error) => {
-
-        //❌ Code for a read error goes here
-        console.log("fail read");
-        console.log(fb_data);
-
-    });
-}
-
-function fb_ReadAll() {
-    console.log('%c fb_ReadAll(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    const dbReference= ref(DB, "Test/Userdata");
-
-    get(dbReference).then((snapshot) => {
-
-        var fb_data = snapshot.val();
-
-        if (fb_data != null) {
-
-            //✅ Code for a successful read all goes here
-            console.log("Successfully read all");
-            console.log(fb_data);
-        } else {
-
-            //✅ Code for no record found goes here
-            console.log("no record");
-            console.log(fb_data);
-
-        }
-
-    }).catch((error) => {
-
-        //❌ Code for a read all error goes here
-        console.log("error not read all");
-        console.log(fb_data);
-    });
-}
-
-/*function fb_ReadRec() {
     console.log('%c fb_ReadRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     const dbReference= ref(DB, "Test/UID/Name");
@@ -261,9 +162,9 @@ function fb_ReadAll() {
         console.log(fb_data);
 
     });
-}*/
+}
 
-/*function fb_ReadAll() {
+function fb_ReadAll() {
      console.log('%c fb_ReadAll(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     const dbReference= ref(DB, "Test/UID/" + userId);
@@ -291,7 +192,7 @@ function fb_ReadAll() {
         console.log("error not read all");
         console.log(fb_data);
     });
-}*/
+}
 
 function fb_UpdateRec() {
     console.log('%c fb_UpdateRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');

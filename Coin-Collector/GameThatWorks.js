@@ -12,8 +12,8 @@ const PLAYERSIZE = 20;
 
 let sheetImg;
 function preload() {
-	sheetImg = loadImage("../imagesCoin/coin.png");
-    imgBG   = loadImage('../imagesCoin/backgroundCoin.png');
+	sheetImg = loadImage("imagesCoin/coin.png");
+    imgBG   = loadImage('imagesCoin/backgroundCoin.png');
 }
 /*******************************************************/
 // setup()
