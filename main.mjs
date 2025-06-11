@@ -27,6 +27,9 @@ window.fb_logout = fb_logout;
 import { fb_WriteRec }
     from './fb.mjs';
 window.fb_WriteRec = fb_WriteRec;
+import { fb_WriteRecScore }
+    from './fb.mjs';
+window.fb_WriteRecScore = fb_WriteRecScore;
 import { fb_ReadRec }
     from './fb.mjs';
 window.fb_ReadRec = fb_ReadRec;

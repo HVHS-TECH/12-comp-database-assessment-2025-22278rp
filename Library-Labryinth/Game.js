@@ -15,11 +15,13 @@ tasks:
 /*******************************************************/
 // Variables
 /*******************************************************/
+
 //game state varaible to determine whether the game is playing, won or lost
 var gameState = "play";
 
 //Score and health trackers
-var score = 0;
+var score = 0; 
+score = userScore
 var health = 5;
 
 //Tracking Books collected in the game
@@ -310,6 +312,8 @@ function levelCompleted() {
 	restart();
 	back();
 	booksCollectedUI(); //shows the diffrent books you've collected on screen
+	fb_WriteRecScore();
+	
 }
 
 

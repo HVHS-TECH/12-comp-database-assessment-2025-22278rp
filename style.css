@@ -1,69 +1,59 @@
 body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    flex-direction: column; /* <<< ADD THIS */
-    justify-content: flex-start; /* <<< ADD THIS */
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-    background-color: #f0f0f0;
-  }
-  
-  .container {
-    display: flex;
-    gap: 20px;
-  }
-  
-  .column {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  button {
-    padding: 10px 20px;
-    font-size: 16px;
-    cursor: pointer;
-    border: none;
-    border-radius: 5px;
-    background-color: #007bff;
-    color: #fff;
-    transition: background-color 0.3s;
-    width: 220px; /* Set a fixed width */
-    text-align: center;
-  }
-  
-  button:hover {
-    background-color: #0056b3;
-  }
+  background-color: #F1FAEE;
+  color: #210269;
+  font-family: Arial, sans-serif;
+  padding: 2rem;
+}
 
-  label {
-    display: block;
-    margin-top: 1rem;
-  }
+.container {
+  max-width: 600px;
+  margin: auto;
+  background-color: #A8DADC;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
 
-  input {
-    width: 100%;
-    padding: 0.5rem;
-    margin-top: 0.3rem;
-    border: 1px solid #ccc;
-    border-radius: 6px;
-  }
-  
-  /*-----------------------------------------------------------*
-    Firebase status div styling
-  /*----------------------------------------------------------*/
-  #s_fbStatus {
-    display: block;
-    margin: 0px;
-    padding-top: 4px;
-    font-size: 14px;
-  }
-  
-  .p_fbStatus {
-    display: inline-block;
-    margin: 0px;
-    padding-top: 4px;
-    margin-right: 20px; /* Add some spacing between paragraphs */
-  }
-  
+h1 {
+  color: #457B9D;
+  font-size: 2.5rem;
+  margin-bottom: 0;
+}
+
+h2 {
+  color: #080130;
+  font-size: 1.2rem;
+  margin-top: 0.2rem;
+}
+
+label {
+  display: block;
+  margin-top: 1rem;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  margin-top: 0.3rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+button {
+  margin-top: 1.5rem;
+  padding: 0.7rem 1.2rem;
+  background-color: #1D3557;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #101e33;
+}
+
+#statusMessage {
+  margin-top: 1rem;
+  font-style: italic;
+}
