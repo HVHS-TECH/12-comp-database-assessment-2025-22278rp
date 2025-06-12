@@ -21,7 +21,6 @@ var gameState = "play";
 
 //Score and health trackers
 var score = 0; 
-score = userScore
 var health = 5;
 
 //Tracking Books collected in the game
@@ -221,6 +220,8 @@ function runGame() {
 	displayScore();
 	healthbar();
 
+	var userScore = score;
+
 	camera.x = player.x
 	camera.y = player.y //the camera follows the player's movements
 
@@ -312,7 +313,7 @@ function levelCompleted() {
 	restart();
 	back();
 	booksCollectedUI(); //shows the diffrent books you've collected on screen
-	fb_WriteRecScore();
+	fb_WriteRec();
 	
 }
 

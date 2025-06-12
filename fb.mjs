@@ -29,7 +29,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_WriteRecScore, fb_ReadRec, fb_ReadAll, fb_UpdateRec, fb_ReadSorted, fb_Listen, fb_DeleteRec }
+export { fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_UpdateRec, fb_ReadSorted, fb_Listen, fb_DeleteRec }
 
 function fb_initialise() {
     console.log('%c fb_initialise(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -112,41 +112,22 @@ function fb_logout() {
 
         });
 }
-
-function fb_WriteRec() {
+var element;
+function fb_WriteRec( element ) {
      if (!currentUser) {
         alert("You must be logged in to submit the form.");
         return;
     }
     console.log('%c fb_WriteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    var name = document.getElementById("name").value;
+    var name = document.getElementById("element").value;
+    userScore = document.getElementById("element").value;
 
     // Add additional fields here as needed
     
     const dbReference= ref(DB, 'Test/UID/' + userId);
     set(dbReference, {
         Name: name,
-    }).then(() => {
-        console.log("Write successful!")
-    }).catch((error) => {
-        console.log("fail Writing")
-    });
-}
-
-function fb_WriteRecScore() {
-     if (!currentUser) {
-        alert("You must be logged in to submit the form.");
-        return;
-    }
-    console.log('%c fb_WriteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    var userScore = document.getElementById("userScore").value;
-
-    // Add additional fields here as needed
-    
-    const dbReference= ref(DB, 'Test/UID/' + userId);
-    set(dbReference, {
         userScore: userScore,
     }).then(() => {
         console.log("Write successful!")
