@@ -137,6 +137,21 @@ function fb_WriteRec( ) {
 }
 function fb_writeScore(){
     console.log("Look I'm Writing!")
+    console.log('%c fb_writeScore(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
+    userScore = document.getElementById("userScore").value;
+
+    // Add additional fields here as needed
+    
+    const dbReference= ref(DB, 'Test/UID/' + userId);
+    set(dbReference, {
+        Name: name,
+        userScore: userScore,
+    }).then(() => {
+        console.log("Write successful!")
+    }).catch((error) => {
+        console.log("fail Writing")
+    });
 }
 function fb_ReadRec() {
     console.log('%c fb_ReadRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');

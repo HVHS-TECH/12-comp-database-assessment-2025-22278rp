@@ -17,7 +17,6 @@ import { fb_writeScore,fb_initialise, fb_authenticate, fb_detectLoginChange, fb_
     window.fb_writeScore = fb_writeScore;
     window.fb_initialise = fb_initialise;
 
-
 /**************************************************************/
 //   END OF CODE
 /**************************************************************/

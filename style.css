@@ -15,9 +15,10 @@ body {
 }
 
 h1 {
-  color: #457B9D;
+  color: #000000;
   font-size: 2.5rem;
   margin-bottom: 0;
+  
 }
 
 h2 {
@@ -33,20 +34,24 @@ label {
 
 input {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 0.7rem;
   margin-top: 0.3rem;
   border: 1px solid #ccc;
   border-radius: 6px;
+  margin-left:5px;
+  margin-right:5px;
 }
 
 button {
   margin-top: 1.5rem;
-  padding: 0.7rem 1.2rem;
+  font-size: 0.9rem;
+  padding: 1.2rem 2.5rem;
   background-color: #1D3557;
   color: white;
   border: none;
   border-radius: 6px;
   cursor: pointer;
+  margin-left:10px;
 }
 
 button:hover {
@@ -69,12 +74,13 @@ grid-template-areas:
 
 .grid-item {
   background-color: #EDE7E3; 
-border-style:dotted;
+  border-style:dotted;
 }
 
 .item1 {
   grid-area: links ;
   background-color:#16697A; display:inline-block;
+  color:#ffffff; 
 }
 
 .item2 {
@@ -88,13 +94,13 @@ font-family: "Audiowide", sans-serif;
 .item3 {
   grid-area: main ;
 
-  color:#1B1F3B; 
+  color:#000000; 
 }
 .item4 {
   grid-area:footer;
   
   text-align:center;
   background-color:#82C0CC;
- 
+  color:#000000; 
 }
 

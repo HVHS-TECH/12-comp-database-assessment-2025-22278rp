@@ -1,8 +1,3 @@
-/**************************************************************/
-// Import all external constants & functions required
-/**************************************************************/
-// Import all the constants & functions required from fb_io module
-
 //variables
 const canvasWidth = 500;
 const canvasHeight = 500;
@@ -24,7 +19,6 @@ function preload() {
 // setup()
 /*******************************************************/
 function setup() {
-    fb_writeScore();
 	cnv = new Canvas(canvasWidth, canvasHeight, "Pixelated x4");
 	Player = new Sprite(100, 100, PLAYERSIZE, PLAYERSIZE, 'd');
 	Player.color = 'orange';
@@ -83,8 +77,8 @@ function loseGame() {
 	textSize(50);
 	text("You missed a coin! ", 10,100);
 	textSize(100);
-
 	text("Score: " + score, 10,200);
+    fb_writeScore();
 }
 function createCoin () {
     coin = new Sprite(random (0, canvasHeight), random (0, canvasHeight), COINSIZE, 'd');
