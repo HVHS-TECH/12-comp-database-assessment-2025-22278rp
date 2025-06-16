@@ -57,3 +57,44 @@ button:hover {
   margin-top: 1rem;
   font-style: italic;
 }
+
+.grid-container {
+display: grid;
+background-color: #EDE7E3; 
+grid-template-areas:
+    'links header header header header header'
+    'links main main main main main'
+    'links footer footer footer footer footer';
+}
+
+.grid-item {
+  background-color: #EDE7E3; 
+border-style:dotted;
+}
+
+.item1 {
+  grid-area: links ;
+  background-color:#16697A; display:inline-block;
+}
+
+.item2 {
+grid-area: header ;
+background-color:#FFA62B;
+color:#1B1F3B; 
+text-align:center;
+font-family: "Audiowide", sans-serif;
+}
+
+.item3 {
+  grid-area: main ;
+
+  color:#1B1F3B; 
+}
+.item4 {
+  grid-area:footer;
+  
+  text-align:center;
+  background-color:#82C0CC;
+ 
+}
+
