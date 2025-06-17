@@ -68,7 +68,8 @@ function fb_authenticate() {
 
         .catch((error) => {
             //❌ Code for an authentication error goes here
-            console.log("ERROR!!!!!!!!");
+            console.log("ERROR!!!!!!!! not ");
+            console.log(error);
 
         });
 }
@@ -135,17 +136,17 @@ function fb_WriteRec( ) {
         console.log("fail Writing")
     });
 }
-function fb_writeScore(){
+function fb_writeScore(userScore){
     console.log("Look I'm Writing!")
+    console.log(userScore);
     console.log('%c fb_writeScore(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    userScore = document.getElementById("userScore").value;
+    //userScore = document.getElementById("userScore").value;
 
     // Add additional fields here as needed
     
     const dbReference= ref(DB, 'Test/UID/' + userId);
     set(dbReference, {
-        Name: name,
         userScore: userScore,
     }).then(() => {
         console.log("Write successful!")

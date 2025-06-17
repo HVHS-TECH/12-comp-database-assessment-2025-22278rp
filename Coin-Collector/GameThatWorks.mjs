@@ -63,6 +63,9 @@ function runGame() {
         coinGroup[i].remove();
         gameState = "lose";
         console.log (gameState);
+        fb_initialise();
+     fb_authenticate();
+        fb_writeScore(score);
         }
     }
     
@@ -78,7 +81,8 @@ function loseGame() {
 	text("You missed a coin! ", 10,100);
 	textSize(100);
 	text("Score: " + score, 10,200);
-    fb_writeScore();
+    
+    
 }
 function createCoin () {
     coin = new Sprite(random (0, canvasHeight), random (0, canvasHeight), COINSIZE, 'd');

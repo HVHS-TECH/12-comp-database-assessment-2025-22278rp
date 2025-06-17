@@ -274,6 +274,7 @@ function win() {
 	console.log("WINNING")
 	mouseInteractRestartButton();
 	mouseInteractBackButton();
+	fb_writeScore();
 }
 
 function levelCompleted() {
@@ -310,7 +311,6 @@ function levelCompleted() {
 	restart();
 	back();
 	booksCollectedUI(); //shows the diffrent books you've collected on screen
-	fb_WriteRec();
 	
 }
 

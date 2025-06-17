@@ -74,13 +74,14 @@ grid-template-areas:
 
 .grid-item {
   background-color: #EDE7E3; 
-  border-style:dotted;
+  border-style:groove;
 }
 
 .item1 {
   grid-area: links ;
   background-color:#16697A; display:inline-block;
   color:#ffffff; 
+  
 }
 
 .item2 {
@@ -93,7 +94,7 @@ font-family: "Audiowide", sans-serif;
 
 .item3 {
   grid-area: main ;
-
+  text-align:center;
   color:#000000; 
 }
 .item4 {
