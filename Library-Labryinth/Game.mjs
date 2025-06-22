@@ -64,6 +64,8 @@ function preload() {
 // setup
 /*******************************************************/
 function setup() {
+	fb_initialise();
+    fb_detectLoginChange();
 	//Setting variable data
 	cnv = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT, 'pixelated x3');
 	world.gravity.y = 10;
@@ -308,9 +310,7 @@ function levelCompleted() {
 	restart();
 	back();
 	booksCollectedUI(); //shows the diffrent books you've collected on screen
-	fb_initialise();
-    fb_detectLoginChange();
-    fb_writeScore(score);
+    fb_writeScoreLibrary(score);
 	
 }
 
@@ -356,9 +356,7 @@ function levelLost() {
 	restart();
 	back();
 	booksCollectedUI(); //shows the diffrent books you've collected on screen
-	fb_initialise();
-    fb_detectLoginChange();
-    fb_writeScore(score);
+    fb_writeScoreLibrary(score);
 }
 
 //displays the current score of the game

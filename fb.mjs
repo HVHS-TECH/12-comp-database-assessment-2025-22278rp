@@ -29,7 +29,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_writeScore,fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_UpdateRec, fb_ReadSorted, fb_Listen, fb_DeleteRec }
+export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_UpdateRec, fb_ReadSorted, fb_Listen, fb_DeleteRec }
 
 function fb_initialise() {
     console.log('%c fb_initialise(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -127,7 +127,7 @@ function fb_WriteRec() {
     // Add additional fields here as needed
     
     const dbReference= ref(DB, 'UIDs/' + userId);
-    set(dbReference, {
+    update(dbReference, {
         Name: name,
         Age: age,
         //userScore: userScore,
@@ -141,17 +141,17 @@ function fb_WriteRec() {
     console.log(age)
 }
 
-function fb_writeScore(userScore){
+function fb_writeScoreCoin(userScore){
     console.log("Look I'm Writing!")
     console.log(userScore);
-    console.log('%c fb_writeScore(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    console.log('%c fb_writeScoreCoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     //userScore = document.getElementById("userScore").value;
 
     // Add additional fields here as needed
     
     const dbReference= ref(DB, 'UIDs/' + userId);
-    set(dbReference, {
+    update(dbReference, {
         userScore: userScore,
     }).then(() => {
         console.log("Write successful!")
@@ -159,6 +159,27 @@ function fb_writeScore(userScore){
         console.log("fail Writing")
     });
 }
+
+function fb_writeScoreLibrary(userScoreLibrary){
+    console.log("Look I'm Writing!")
+    console.log(userScoreLibrary);
+    console.log('%c fb_writeScoreLibrary(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
+    //userScore = document.getElementById("userScore").value;
+
+    // Add additional fields here as needed
+    
+    const dbReference= ref(DB, 'UIDs/' + userId);
+    update(dbReference, {
+        userScoreLibrary: userScoreLibrary,
+    }).then(() => {
+        console.log("Write successful!")
+    }).catch((error) => {
+        console.log("fail Writing")
+    });
+}
+
+
 function fb_ReadRec() {
     console.log('%c fb_ReadRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()

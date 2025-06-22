@@ -11,6 +11,7 @@ const COINSIZE = 10;
 const COIN_TIMEOUT = 5000;
 const PLAYERSIZE = 20;
 
+
 let sheetImg;
 function preload() {
 	sheetImg = loadImage("imagesCoin/coin.png");
@@ -36,6 +37,8 @@ function setup() {
         Player.rotation = 0;
        
     }	
+    fb_initialise();
+    fb_detectLoginChange();
 
 }
 
@@ -64,9 +67,7 @@ function runGame() {
         coinGroup[i].remove();
         gameState = "lose";
         console.log (gameState);
-        fb_initialise();
-        fb_detectLoginChange();
-        fb_writeScore(score);
+        fb_writeScoreCoin(score);
         }
     }
     
