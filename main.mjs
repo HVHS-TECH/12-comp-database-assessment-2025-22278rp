@@ -8,6 +8,7 @@ const COL_B = '#CD7F32';	//  console.log for functions scheme
 console.log('%c main.mjs',
     'color: blue; background-color: white;');
 
+
 /**************************************************************/
 // Import all external constants & functions required
 /**************************************************************/
@@ -45,6 +46,8 @@ window.fb_Listen = fb_Listen;
 import { fb_DeleteRec }
     from './fb.mjs';
 window.fb_DeleteRec = fb_DeleteRec;
+
+
 
 
 /**************************************************************/

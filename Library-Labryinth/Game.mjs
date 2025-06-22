@@ -217,8 +217,6 @@ function runGame() {
 	displayScore();
 	healthbar();
 
-	var userScore = score;
-
 	camera.x = player.x
 	camera.y = player.y //the camera follows the player's movements
 
@@ -274,7 +272,6 @@ function win() {
 	console.log("WINNING")
 	mouseInteractRestartButton();
 	mouseInteractBackButton();
-	fb_writeScore();
 }
 
 function levelCompleted() {
@@ -311,6 +308,9 @@ function levelCompleted() {
 	restart();
 	back();
 	booksCollectedUI(); //shows the diffrent books you've collected on screen
+	fb_initialise();
+    fb_detectLoginChange();
+    fb_writeScore(score);
 	
 }
 
@@ -320,6 +320,7 @@ function lost() {
 	console.log("I LOST :(");
 	mouseInteractRestartButton();
 	mouseInteractBackButton();
+	
 }
 
 function levelLost() {
@@ -355,6 +356,9 @@ function levelLost() {
 	restart();
 	back();
 	booksCollectedUI(); //shows the diffrent books you've collected on screen
+	fb_initialise();
+    fb_detectLoginChange();
+    fb_writeScore(score);
 }
 
 //displays the current score of the game

@@ -48,6 +48,7 @@ function fb_initialise() {
     const app = initializeApp(firebaseConfig);
     const firebaseGameDB = getDatabase(app);
     console.info(firebaseGameDB);
+    // Initialize Firebase only if it hasn’t already been initialized
 }
 
 function fb_authenticate() {
@@ -74,29 +75,26 @@ function fb_authenticate() {
         });
 }
 
+
+
 function fb_detectLoginChange() {
     console.log('%c fb_detectLoginChange(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const AUTH = getAuth();
 
     onAuthStateChanged(AUTH, (user) => {
-
         if (user) {
-
-            //✅ Code for user logged in goes here
-            console.log("Logged in code");
+            currentUser = user;
+            userId = user.uid;
+            console.log("✅ Logged in as:", user.email);
         } else {
-
-            //✅ Code for user logged out goes here
-            console.log("Logged out");
-
+            console.log("⚠️ Not logged in — redirecting to index.html");
+            location.href = "index.html"; 
         }
-
     }, (error) => {
-
-        //❌ Code for an onAuthStateChanged error goes here
-
+        console.error("❌ Auth detection error:", error);
     });
 }
+
 function fb_logout() {
     console.log('%c fb_logout(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const AUTH = getAuth();
@@ -113,7 +111,9 @@ function fb_logout() {
 
         });
 }
-function fb_WriteRec( ) {
+
+
+function fb_WriteRec() {
      if (!currentUser) {
         alert("You must be logged in to submit the form.");
         location.href = 'index.html'
@@ -122,20 +122,25 @@ function fb_WriteRec( ) {
     console.log('%c fb_WriteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     var name = document.getElementById("name").value;
-    //userScore = document.getElementById("element").value;
+    var age = document.getElementById("age").value;
 
     // Add additional fields here as needed
     
-    const dbReference= ref(DB, 'Test/UID/' + userId);
+    const dbReference= ref(DB, 'UIDs/' + userId);
     set(dbReference, {
         Name: name,
+        Age: age,
         //userScore: userScore,
     }).then(() => {
         console.log("Write successful!")
     }).catch((error) => {
         console.log("fail Writing")
     });
+    console.log("Look I'm Writing")
+    console.log(name)
+    console.log(age)
 }
+
 function fb_writeScore(userScore){
     console.log("Look I'm Writing!")
     console.log(userScore);
@@ -145,7 +150,7 @@ function fb_writeScore(userScore){
 
     // Add additional fields here as needed
     
-    const dbReference= ref(DB, 'Test/UID/' + userId);
+    const dbReference= ref(DB, 'UIDs/' + userId);
     set(dbReference, {
         userScore: userScore,
     }).then(() => {
@@ -157,7 +162,7 @@ function fb_writeScore(userScore){
 function fb_ReadRec() {
     console.log('%c fb_ReadRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    const dbReference= ref(DB, "Test/UID/Name");
+    const dbReference= ref(DB, "UIDs/Name");
 
     get(dbReference).then((snapshot) => {
 
@@ -187,7 +192,7 @@ function fb_ReadRec() {
 function fb_ReadAll() {
      console.log('%c fb_ReadAll(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    const dbReference= ref(DB, "Test/UID/" + userId);
+    const dbReference= ref(DB, "UIDs/" + userId);
 
     get(dbReference).then((snapshot) => {
 
@@ -217,7 +222,7 @@ function fb_ReadAll() {
 function fb_UpdateRec() {
     console.log('%c fb_UpdateRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    const dbReference= ref(DB, "Test/Userdata");
+    const dbReference= ref(DB, "UIDs");
 
     update(dbReference, {Location: "Alabasta", Name: "Karoo", Cuteness: 50}).then(() => {
 
@@ -236,7 +241,7 @@ function fb_ReadSorted() {
     const DB = getDatabase()
     var sortKey = "movieQuantity";
 
-    const dbReference= query(ref(DB, "Test/UID" ), orderByChild(sortKey), limitToFirst(2));
+    const dbReference= query(ref(DB, "UIDs" ), orderByChild(sortKey), limitToFirst(2));
 
      get(dbReference).then((snapshot) => 
     {
@@ -278,7 +283,7 @@ function fb_Listen() {
     console.log('%c fb_Listen(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
 
-    const dbReference = ref(DB, "Test/Userdata/Cuteness");
+    const dbReference = ref(DB, "UIDs/userScore");
 
     onValue(dbReference, (snapshot) => {
 

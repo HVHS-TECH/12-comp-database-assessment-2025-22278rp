@@ -16,6 +16,9 @@ import { fb_writeScore,fb_initialise, fb_authenticate, fb_detectLoginChange, fb_
     from '../fb.mjs';
     window.fb_writeScore = fb_writeScore;
     window.fb_initialise = fb_initialise;
+    window.fb_authenticate = fb_authenticate;
+    window.fb_detectLoginChange = fb_detectLoginChange;
+
 
 /**************************************************************/
 //   END OF CODE

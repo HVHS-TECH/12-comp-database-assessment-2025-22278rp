@@ -1,3 +1,4 @@
+
 //variables
 const canvasWidth = 500;
 const canvasHeight = 500;
@@ -64,7 +65,7 @@ function runGame() {
         gameState = "lose";
         console.log (gameState);
         fb_initialise();
-     fb_authenticate();
+        fb_detectLoginChange();
         fb_writeScore(score);
         }
     }
