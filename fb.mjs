@@ -2,7 +2,7 @@
 // fb_io.mjs
 // Generalised firebase routines
 // Written by Ryan Parks, Term 2 2025
-//
+// fb_detectLoginChanged code partly from chatgpt
 // All variables & function begin with fb_  all const with FB_
 // Diagnostic code lines have a comment appended to them //DIAG
 /**************************************************************/
@@ -20,7 +20,7 @@ var userId = null;
 // Import all the methods you want to call from the firebase modules
 import { initializeApp }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getDatabase, ref, set, get, update, query, orderByChild, limitToFirst, onValue, remove }
+import { getDatabase, ref, get, update, query, orderByChild, limitToFirst, remove }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -29,7 +29,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_UpdateRec, fb_ReadSorted, fb_Listen, fb_DeleteRec }
+export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_DeleteRec }
 
 function fb_initialise() {
     console.log('%c fb_initialise(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -136,23 +136,27 @@ function fb_WriteRec() {
     }).catch((error) => {
         console.log("fail Writing")
     });
+
+    const welcomeUser = document.getElementById("welcomeUser");
+    welcomeUser.innerText = `Username: ${name}`;
     console.log("Look I'm Writing")
     console.log(name)
     console.log(age)
 }
 
-function fb_writeScoreCoin(userScore){
+//Writing the score for the game: Coin Collector to the database
+
+function fb_writeScoreCoin(userScoreCoin){
     console.log("Look I'm Writing!")
-    console.log(userScore);
+    console.log(userScoreCoin);
     console.log('%c fb_writeScoreCoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    //userScore = document.getElementById("userScore").value;
 
     // Add additional fields here as needed
     
     const dbReference= ref(DB, 'UIDs/' + userId);
     update(dbReference, {
-        userScore: userScore,
+        userScoreCoin: userScoreCoin,
     }).then(() => {
         console.log("Write successful!")
     }).catch((error) => {
@@ -160,12 +164,13 @@ function fb_writeScoreCoin(userScore){
     });
 }
 
+//Writing the score for the game: Library Labryinth to the database
+
 function fb_writeScoreLibrary(userScoreLibrary){
     console.log("Look I'm Writing!")
     console.log(userScoreLibrary);
     console.log('%c fb_writeScoreLibrary(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    //userScore = document.getElementById("userScore").value;
 
     // Add additional fields here as needed
     
@@ -240,23 +245,6 @@ function fb_ReadAll() {
     });
 }
 
-function fb_UpdateRec() {
-    console.log('%c fb_UpdateRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    const dbReference= ref(DB, "UIDs");
-
-    update(dbReference, {Location: "Alabasta", Name: "Karoo", Cuteness: 50}).then(() => {
-
-        //✅ Code for a successful update goes here
-
-    }).catch((error) => {
-
-        //❌ Code for a update error goes here
-
-    });
-
-}
-
 function fb_ReadSorted() {
     console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
@@ -300,37 +288,11 @@ function fb_ReadSorted() {
 
 }
 
-function fb_Listen() {
-    console.log('%c fb_Listen(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-
-    const dbReference = ref(DB, "UIDs/userScore");
-
-    onValue(dbReference, (snapshot) => {
-
-        var fb_data = snapshot.val();
-
-        if (fb_data != null) {
-
-            //✅ Code for a successful read goes here
-            console.log("Data has been changed")
-
-        } else {
-
-            //✅ Code for no record found goes here
-            console.log("No record to be monitored")
-
-        }
-
-    });
-
-}
-
 function fb_DeleteRec() {
     console.log('%c fb_DeleteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
 
-    const dbReference= ref(DB, "Test/Userdata");
+    const dbReference= ref(DB, "UIDs/"  + userId);
 
     remove(dbReference).then(() => {
 

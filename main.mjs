@@ -13,39 +13,17 @@ console.log('%c main.mjs',
 // Import all external constants & functions required
 /**************************************************************/
 // Import all the constants & functions required from fb_io module
-import { fb_initialise }
-    from './fb.mjs';
+import { fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_DeleteRec   }
+    from '../fb.mjs';
     window.fb_initialise = fb_initialise;
-import { fb_authenticate }
-    from './fb.mjs';
     window.fb_authenticate = fb_authenticate;
-import { fb_detectLoginChange }
-    from './fb.mjs';
-window.fb_detectLoginChange = fb_detectLoginChange;
-import { fb_logout }
-    from './fb.mjs';
-window.fb_logout = fb_logout;
-import { fb_WriteRec }
-    from './fb.mjs';
-window.fb_WriteRec = fb_WriteRec;
-import { fb_ReadRec }
-    from './fb.mjs';
-window.fb_ReadRec = fb_ReadRec;
-import { fb_ReadAll }
-    from './fb.mjs';
-window.fb_ReadAll = fb_ReadAll;
-import { fb_UpdateRec }
-    from './fb.mjs';
-window.fb_UpdateRec = fb_UpdateRec;
-import { fb_ReadSorted }
-    from './fb.mjs';
-window.fb_ReadSorted = fb_ReadSorted;
-import { fb_Listen }
-    from './fb.mjs';
-window.fb_Listen = fb_Listen;
-import { fb_DeleteRec }
-    from './fb.mjs';
-window.fb_DeleteRec = fb_DeleteRec;
+    window.fb_detectLoginChange = fb_detectLoginChange;
+    window.fb_logout = fb_logout;
+    window.fb_WriteRec = fb_WriteRec;
+    window.fb_ReadRec = fb_ReadRec;
+    window.fb_ReadAll = fb_ReadAll;
+    window.fb_ReadSorted = fb_ReadSorted;
+    window.fb_DeleteRec = fb_DeleteRec;
 
 
 
