@@ -12,7 +12,7 @@ console.log('%c main.mjs',
 // Import all external constants & functions required
 /**************************************************************/
 // Import all the constants & functions required from fb_io module
-import { fb_writeScoreLibrary,fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_UpdateRec,  fb_ReadSorted, fb_DeleteRec   }
+import { fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll,  fb_ReadSorted, fb_DeleteRec   }
     from '../fb.mjs';
     window.fb_writeScoreLibrary = fb_writeScoreLibrary;
     window.fb_initialise = fb_initialise;
