@@ -138,7 +138,7 @@ function fb_WriteRec() {
     });
 
     const welcomeUser = document.getElementById("welcomeUser");
-    welcomeUser.innerText = `Username: ${name}`;
+    welcomeUser.innerHTML = `Username: ${name}`;
     console.log("Look I'm Writing")
     console.log(name)
     console.log(age)
