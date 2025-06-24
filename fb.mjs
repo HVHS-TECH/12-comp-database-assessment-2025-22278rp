@@ -85,7 +85,7 @@ function fb_detectLoginChange() {
         if (user) {
             currentUser = user;
             userId = user.uid;
-            console.log("✅ Logged in as:", user.email);
+            console.log("✅ Logged in as:", user.email, user.displayName, user.photoURL);
         } else {
             console.log("⚠️ Not logged in — redirecting to index.html");
             location.href = "index.html"; 
@@ -113,8 +113,8 @@ function fb_logout() {
 }
 
 
-function fb_WriteRec() {
-     if (!currentUser) {
+/*function fb_WriteRec() {
+    if (!currentUser) {
         alert("You must be logged in to submit the form.");
         location.href = 'index.html'
     }
@@ -123,25 +123,95 @@ function fb_WriteRec() {
     const DB = getDatabase()
     var name = document.getElementById("name").value;
     var age = document.getElementById("age").value;
+    const AUTH = getAuth();
 
-    // Add additional fields here as needed
     
     const dbReference= ref(DB, 'UIDs/' + userId);
     update(dbReference, {
         Name: name,
         Age: age,
-        //userScore: userScore,
+        Email: user.email,
+        displayName: user.displayName,
+        photoURL: user.photoURL,
     }).then(() => {
         console.log("Write successful!")
     }).catch((error) => {
         console.log("fail Writing")
     });
 
+      onAuthStateChanged(AUTH, (user) => {
+        if (user) {
+            currentUser = user;
+            userId = user.uid;
+            console.log("✅ Logged in as:", user.email, user.displayName, user.photoURL);
+        } else {
+            console.log("⚠️ Not logged in — redirecting to index.html");
+            location.href = "index.html"; 
+        }
+    }, (error) => {
+        console.error("❌ Auth detection error:", error);
+    });
+    // Add additional fields here as needed
     const welcomeUser = document.getElementById("welcomeUser");
     welcomeUser.innerHTML = `Username: ${name}`;
     console.log("Look I'm Writing")
     console.log(name)
     console.log(age)
+}*/
+
+function fb_WriteRec() {
+  const AUTH = getAuth();
+  var name = document.getElementById("name").value;
+  var age = document.getElementById("age").value;
+  if (!currentUser || name == "" || name == null || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+  return;
+  }
+  
+  
+ 
+  
+  console.log('%c fb_WriteRec(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const DB = getDatabase()
+  
+  const dbReference = ref(DB, "UIDs/" + userId);
+  
+  update(dbReference, { Name: name, Age: age }).then(() => {
+
+    //✅ Code for a successful write goes here
+    console.log("successful write")
+    
+    
+  }).catch((error) => {
+
+    //❌ Code for a write error goes here
+    console.log("Writing error")
+  });
+
+  onAuthStateChanged(AUTH, (user) => {
+        if (user) {
+            currentUser = user;
+            userId = user.uid;
+            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL);
+            update(dbReference, { Email: user.email, profilepicture: user.photoURL, displayName: user.displayName}).then(() => {
+              location.href='gameMenu.html'
+    //✅ Code for a successful write goes here
+    console.log("successful write")
+    
+    
+  }).catch((error) => {
+
+    //❌ Code for a write error goes here
+    console.log("Writing error")
+  });
+        } else {
+            console.log("⚠️ Not logged in — redirecting to index.html");
+            location.href = "index.html"; 
+        }
+    },
+    (error) => {
+        console.error("❌ Auth detection error:", error);
+    });
 }
 
 //Writing the score for the game: Coin Collector to the database
