@@ -297,7 +297,7 @@ function fb_ReadSorted() {
     const DB = getDatabase()
     var sortKey = "userScoreLibrary";
 
-    const dbReference= query(ref(DB, "UIDs/" ), orderByChild(sortKey), limitToFirst(3));
+    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(3));
 
      get(dbReference).then((snapshot) => 
     {
