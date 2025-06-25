@@ -1,6 +1,6 @@
 /**************************************************************/
 // main.mjs
-// Main entry for index.html
+// Main entry for indexCoin.html
 // Written by Ryan Parks, Term 2 2025
 /**************************************************************/
 const COL_C = 'white';	    // These two const are part of the coloured 	

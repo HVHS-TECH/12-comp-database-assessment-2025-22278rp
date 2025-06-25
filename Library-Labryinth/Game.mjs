@@ -175,7 +175,7 @@ function setup() {
 			'..abbbbbbb..cc..cc..cc..bbbbbbbbbbbbbbbbbbb.............bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
 			'..abbbbbbbddbbddbbddbbddbbbbbbbbbbbbbbbbbbb.f.........f.bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
 			'..abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbhh.........hhbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
-			'..abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.............bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
+			'..abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb...........................................................b',
 			'..abbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb.....f.....................................................b',
 			'..bbb..........................................hhh....................................................b',
 			'......................................................................................................b',

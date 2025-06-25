@@ -29,7 +29,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_DeleteRec }
+export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_WriteRecPrivate, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_DeleteRec }
 
 function fb_initialise() {
     console.log('%c fb_initialise(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -112,71 +112,20 @@ function fb_logout() {
         });
 }
 
-
-/*function fb_WriteRec() {
-    if (!currentUser) {
-        alert("You must be logged in to submit the form.");
-        location.href = 'index.html'
-    }
-    else{location.href = 'gameMenu.html'}
-    console.log('%c fb_WriteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    var name = document.getElementById("name").value;
-    var age = document.getElementById("age").value;
-    const AUTH = getAuth();
-
-    
-    const dbReference= ref(DB, 'UIDs/' + userId);
-    update(dbReference, {
-        Name: name,
-        Age: age,
-        Email: user.email,
-        displayName: user.displayName,
-        photoURL: user.photoURL,
-    }).then(() => {
-        console.log("Write successful!")
-    }).catch((error) => {
-        console.log("fail Writing")
-    });
-
-      onAuthStateChanged(AUTH, (user) => {
-        if (user) {
-            currentUser = user;
-            userId = user.uid;
-            console.log("✅ Logged in as:", user.email, user.displayName, user.photoURL);
-        } else {
-            console.log("⚠️ Not logged in — redirecting to index.html");
-            location.href = "index.html"; 
-        }
-    }, (error) => {
-        console.error("❌ Auth detection error:", error);
-    });
-    // Add additional fields here as needed
-    const welcomeUser = document.getElementById("welcomeUser");
-    welcomeUser.innerHTML = `Username: ${name}`;
-    console.log("Look I'm Writing")
-    console.log(name)
-    console.log(age)
-}*/
-
 function fb_WriteRec() {
   const AUTH = getAuth();
   var name = document.getElementById("name").value;
-  var age = document.getElementById("age").value;
-  if (!currentUser || name == "" || name == null || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+  if (!currentUser || name == "" || name == null ) {alert("You must be logged in and enter a valid name.")
   return;
   }
-  
-  
- 
   
   console.log('%c fb_WriteRec(): ',
     'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase()
   
-  const dbReference = ref(DB, "UIDs/" + userId);
+  const dbReference = ref(DB, "Public/" + userId);
   
-  update(dbReference, { Name: name, Age: age }).then(() => {
+  update(dbReference, { displayName: name }).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
@@ -188,13 +137,23 @@ function fb_WriteRec() {
     console.log("Writing error")
   });
 
-  onAuthStateChanged(AUTH, (user) => {
-        if (user) {
-            currentUser = user;
-            userId = user.uid;
-            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL);
-            update(dbReference, { Email: user.email, profilepicture: user.photoURL, displayName: user.displayName}).then(() => {
-              location.href='gameMenu.html'
+
+}
+
+function fb_WriteRecPrivate() {
+  const AUTH = getAuth();
+  var age = document.getElementById("age").value;
+  if (!currentUser || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+  return;
+  }
+  console.log('%c fb_WriteRecPrivate(): ',
+    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const DB = getDatabase()
+  
+  const dbReference = ref(DB, "Private/" + userId);
+  
+  update(dbReference, { Age: age }).then(() => {
+
     //✅ Code for a successful write goes here
     console.log("successful write")
     
@@ -203,6 +162,24 @@ function fb_WriteRec() {
 
     //❌ Code for a write error goes here
     console.log("Writing error")
+  });
+
+  //Collects data of the user's google account
+
+  onAuthStateChanged(AUTH, (user) => {
+        if (user) {
+            currentUser = user;
+            userId = user.uid;
+            console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL);
+            update(dbReference, { Email: user.email, profilepicture: user.photoURL, Name: user.displayName}).then(() => {
+              location.href='gameMenu.html'
+    //✅ Code for a successful write goes here
+    console.log("Google login completed")
+    
+  }).catch((error) => {
+
+    //❌ Code for a write error goes here
+    console.log("Google login error")
   });
         } else {
             console.log("⚠️ Not logged in — redirecting to index.html");
@@ -224,7 +201,7 @@ function fb_writeScoreCoin(userScoreCoin){
 
     // Add additional fields here as needed
     
-    const dbReference= ref(DB, 'UIDs/' + userId);
+    const dbReference= ref(DB, 'Public/' + userId);
     update(dbReference, {
         userScoreCoin: userScoreCoin,
     }).then(() => {
@@ -244,7 +221,7 @@ function fb_writeScoreLibrary(userScoreLibrary){
 
     // Add additional fields here as needed
     
-    const dbReference= ref(DB, 'UIDs/' + userId);
+    const dbReference= ref(DB, 'Public/' + userId);
     update(dbReference, {
         userScoreLibrary: userScoreLibrary,
     }).then(() => {
@@ -318,9 +295,9 @@ function fb_ReadAll() {
 function fb_ReadSorted() {
     console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    var sortKey = "movieQuantity";
+    var sortKey = "userScoreLibrary";
 
-    const dbReference= query(ref(DB, "UIDs" ), orderByChild(sortKey), limitToFirst(2));
+    const dbReference= query(ref(DB, "UIDs/" ), orderByChild(sortKey), limitToFirst(3));
 
      get(dbReference).then((snapshot) => 
     {
@@ -348,6 +325,8 @@ function fb_ReadSorted() {
 
            //✅ Code for no record found goes here
             console.log("Sorted Successfully, but no record");
+            
+
         }
 
     }).catch((error) => {
