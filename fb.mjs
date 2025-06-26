@@ -296,8 +296,9 @@ function fb_ReadSorted() {
     console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     var sortKey = "userScoreLibrary";
+    leaderboardSign.innerHTML = "You pressed the button!";
 
-    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(3));
+    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(4));
 
      get(dbReference).then((snapshot) => 
     {

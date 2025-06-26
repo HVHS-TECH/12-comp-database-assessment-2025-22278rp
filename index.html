@@ -44,20 +44,8 @@
     <div class="grid-item item3">
         <main>
             <h1 class="intro">Welcome to my game library</h1>
-            <h3 >Leaderboards:</h3>
-            <button onclick="fb_ReadSorted(); ">Open Library Labryinth Leaderboard</button>
-            <table class="w3-table w3-striped w3-bordered w3-hoverable">
-            <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Username</th>
-                    <th>Score</th>
-            </tr>
-    </thead>
-    <tbody id="leaderboardBody">
-        <!-- Leaderboard rows injected here by fb_ReadSorted() -->
-    </tbody>
-</table>
+            <h3 id="leaderboardSign" >Leaderboards:</h3>
+            <button onclick="fb_ReadSorted(); ">Sort Library Labryinth Leaderboard</button>
         </main>
     </div>
     <div class="grid-item item4">
