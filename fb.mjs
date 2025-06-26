@@ -194,24 +194,6 @@ function fb_WriteRecPrivate() {
 
 //Writing the score for the game: Coin Collector to the database
 
-function fb_writeScoreCoin(userScoreCoin){
-    console.log("Look I'm Writing!")
-    console.log(userScoreCoin);
-    console.log('%c fb_writeScoreCoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-
-    // Add additional fields here as needed
-    
-    const dbReference= ref(DB, 'Public/' + userId);
-    update(dbReference, {
-        userScoreCoin: userScoreCoin,
-    }).then(() => {
-        console.log("Write successful!")
-    }).catch((error) => {
-        console.log("fail Writing")
-    });
-}
-
 function fb_writeScoreCoin(userScoreCoin) {
     console.log("Look I'm Writing!")
     console.log(userScoreCoin);
@@ -364,6 +346,75 @@ function fb_ReadSorted() {
 
 }
 
+/*function fb_ReadSorted() {
+    console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase();
+    var sortKey = "userHighScoreLibrary";  // Use the key where highscores are saved, probably userHighScoreLibrary
+    const leaderboardSign = document.getElementById("leaderboardSign");
+    leaderboardSign.innerHTML = "Library Labyrinth Leaderboard";
+
+    const highScoreTableBody = document.getElementById("highScoreTableLibraryBody");
+
+    // Clear existing rows before adding new ones
+    highScoreTableBody.innerHTML = "";
+
+    // Query top 10 scores sorted by userHighScoreLibrary DESCENDING
+    // Firebase RTDB doesn't support descending order directly,
+    // so you query ascending and reverse in JS.
+
+    const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey), limitToFirst(10));
+
+    get(dbReference).then((snapshot) => {
+        let scores = [];
+
+        snapshot.forEach(userSnap => {
+            const val = userSnap.val();
+            if (val[sortKey] != null) {  // Only include if score exists
+                scores.push({
+                    name: val.displayName || "Anonymous",
+                    score: val[sortKey]
+                });
+            }
+        });
+
+        // Sort scores descending (high to low)
+        scores.sort((a, b) => b.score - a.score);
+
+        // Add rows to table
+        scores.forEach((entry, index) => {
+            const row = document.createElement("tr");
+
+            const rankCell = document.createElement("td");
+            rankCell.textContent = index + 1;
+            row.appendChild(rankCell);
+
+            const nameCell = document.createElement("td");
+            nameCell.textContent = entry.name;
+            row.appendChild(nameCell);
+
+            const scoreCell = document.createElement("td");
+            scoreCell.textContent = entry.score;
+            row.appendChild(scoreCell);
+
+            highScoreTableBody.appendChild(row);
+        });
+
+        if (scores.length === 0) {
+            // If no scores, show a placeholder row
+            const row = document.createElement("tr");
+            const noDataCell = document.createElement("td");
+            noDataCell.colSpan = 3;
+            noDataCell.textContent = "No scores found.";
+            row.appendChild(noDataCell);
+            highScoreTableBody.appendChild(row);
+        }
+
+        console.log("Leaderboard updated");
+    }).catch((error) => {
+        console.error("Error reading leaderboard:", error);
+    });
+}
+
 function fb_ReadSortedCoin() {
     console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
@@ -408,50 +459,7 @@ function fb_ReadSortedCoin() {
         console.log("Sorting failed");
     });
 
-}
-
-/*function fb_ReadSorted() {
-    console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-
-    const DB = getDatabase();
-    const sortKey = "userScoreLibrary";
-
-    const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey), limitToFirst(10));
-
-    get(dbReference).then((snapshot) => {
-        const leaderboardBody = document.getElementById("leaderboardBody");
-        leaderboardBody.innerHTML = ""; // Clear old rows
-
-        // Collect and sort data (Firebase returns in ascending order)
-        const rows = [];
-
-        snapshot.forEach((userScoreSnapshot) => {
-            const data = userScoreSnapshot.val();
-            rows.push({
-                displayName: data.displayName || "Unnamed",
-                score: data.userScoreLibrary || 0
-            });
-        });
-
-        // Sort descending (highest score first)
-        rows.sort((a, b) => b.score - a.score);
-
-        rows.forEach((entry, index) => {
-            const tr = document.createElement("tr");
-            tr.innerHTML = `
-                <td>${index + 1}</td>
-                <td>${entry.displayName}</td>
-                <td>${entry.score}</td>
-            `;
-            leaderboardBody.appendChild(tr);
-        });
-
-        console.log("✅ Leaderboard updated.");
-    }).catch((error) => {
-        console.error("❌ Sorting failed:", error);
-    });
 }*/
-
 
 function fb_DeleteRec() {
     console.log('%c fb_DeleteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
