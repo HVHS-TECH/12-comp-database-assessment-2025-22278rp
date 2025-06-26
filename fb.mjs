@@ -212,19 +212,39 @@ function fb_writeScoreCoin(userScoreCoin){
     });
 }
 
+function fb_writeScoreCoin(userScoreCoin) {
+    console.log("Look I'm Writing!")
+    console.log(userScoreCoin);
+    console.log('%c fb_writeScoreCoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase();
+    const highScoreRef = ref(DB, "Public/" + userId + "/userHighScoreCoin");
+    const userRef = ref(DB, "Public/" + userId);
+    console.log("Score written")
+    get(highScoreRef).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
+        const prevHigh = snap.exists() ? snap.val() : 0;
+        const highScore = userScoreCoin > prevHigh ? userScoreCoin : prevHigh;
+
+
+    update(userRef, {userScoreCoin: userScoreCoin,
+      userHighScoreCoin: highScore}).then(() => {
+      console.log("written")
+    });
+  });
+
+}
 //Writing the score for the game: Library Labryinth to the database
 
 function fb_writeScoreLibrary(userScoreLibrary) {
-console.log("Look I'm Writing!")
-console.log(userScoreLibrary);
-console.log('%c fb_writeScoreLibrary(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-const DB = getDatabase();
-const highScoreRef = ref(DB, "Public/" + userId + "/userHighScoreLibrary");
-const userRef = ref(DB, "Public/" + userId);
-console.log("Score written")
-  get(highScoreRef).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
-    const prevHigh = snap.exists() ? snap.val() : 0;
-    const highScore = userScoreLibrary > prevHigh ? userScoreLibrary : prevHigh;
+    console.log("Look I'm Writing!")
+    console.log(userScoreLibrary);
+    console.log('%c fb_writeScoreLibrary(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase();
+    const highScoreRef = ref(DB, "Public/" + userId + "/userHighScoreLibrary");
+    const userRef = ref(DB, "Public/" + userId);
+    console.log("Score written")
+    get(highScoreRef).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
+        const prevHigh = snap.exists() ? snap.val() : 0;
+        const highScore = userScoreLibrary > prevHigh ? userScoreLibrary : prevHigh;
 
 
     update(userRef, {userScoreLibrary: userScoreLibrary,
