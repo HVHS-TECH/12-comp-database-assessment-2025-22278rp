@@ -25,12 +25,14 @@
     <div class="grid-container">
     <div class="grid-item item1">
         <nav>
-        <button onclick="fb_initialise(); fb_authenticate()">Login with Google</button>
+        <button onclick="fb_initialise(); fb_authenticate(); fb_ReadSorted();">Login with Google</button>
         <form id="userInfoForm">
         <label for="name">Username:</label>
         <input type="text" id="name" name="name" required />
         <label for="name">Age:</label>
         <input type="text" id="age" age="age" required />
+        <label for="name">Favourite Colour:</label>
+        <input type="text" id="colour" colour="colour" required />
         </form>
         <button onclick="fb_WriteRec(); fb_WriteRecPrivate()">Submit</button>
         </nav>
@@ -46,6 +48,31 @@
             <h1 class="intro">Welcome to my game library</h1>
             <h3 id="leaderboardSign" >Leaderboards:</h3>
             <button onclick="fb_ReadSorted(); ">Sort Library Labryinth Leaderboard</button>
+            <table>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Highscore</th> 
+                </tr>
+                <tr id = "highScoreTableLibrary">
+                    <td>1</td>
+                    <td id = "Test">Ryan</td>
+                    <td id = "Test2">1250</td>
+                </tr>
+            </table>
+            <button onclick="fb_ReadSorted(); ">Sort Coin Collector Leaderboard</button>
+            <table>
+                <tr>
+                    <th>Rank</th>
+                    <th>Name</th>
+                    <th>Highscore</th> 
+                </tr>
+                <tr id = "highScoreTableCoin">
+                    <td>1</td>
+                    <td>Ryan Parks</td>
+                    <td>1250</td>
+                </tr>
+            </table>
         </main>
     </div>
     <div class="grid-item item4">

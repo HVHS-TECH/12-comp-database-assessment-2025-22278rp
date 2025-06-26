@@ -29,7 +29,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_WriteRecPrivate, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_DeleteRec }
+export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_WriteRecPrivate, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_ReadSortedCoin, fb_DeleteRec }
 
 function fb_initialise() {
     console.log('%c fb_initialise(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -143,7 +143,8 @@ function fb_WriteRec() {
 function fb_WriteRecPrivate() {
   const AUTH = getAuth();
   var age = document.getElementById("age").value;
-  if (!currentUser || age == "" || isNaN(age)) {alert("You must be logged in and enter a valid name and age.")
+  var colour = document.getElementById("colour").value;
+  if (!currentUser || age == "" || isNaN(age) || colour == "" || !isNaN(colour)) {alert("You must be logged in and enter a valid name and age.")
   return;
   }
   console.log('%c fb_WriteRecPrivate(): ',
@@ -152,7 +153,7 @@ function fb_WriteRecPrivate() {
   
   const dbReference = ref(DB, "Private/" + userId);
   
-  update(dbReference, { Age: age }).then(() => {
+  update(dbReference, { Age: age, Colour: colour }).then(() => {
 
     //✅ Code for a successful write goes here
     console.log("successful write")
@@ -213,22 +214,25 @@ function fb_writeScoreCoin(userScoreCoin){
 
 //Writing the score for the game: Library Labryinth to the database
 
-function fb_writeScoreLibrary(userScoreLibrary){
-    console.log("Look I'm Writing!")
-    console.log(userScoreLibrary);
-    console.log('%c fb_writeScoreLibrary(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
+function fb_writeScoreLibrary(userScoreLibrary) {
+console.log("Look I'm Writing!")
+console.log(userScoreLibrary);
+console.log('%c fb_writeScoreLibrary(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+const DB = getDatabase();
+const highScoreRef = ref(DB, "Public/" + userId + "/userHighScoreLibrary");
+const userRef = ref(DB, "Public/" + userId);
+console.log("Score written")
+  get(highScoreRef).then(snap => { //Code in fb_WriteScore was made with help from Chatgpt.
+    const prevHigh = snap.exists() ? snap.val() : 0;
+    const highScore = userScoreLibrary > prevHigh ? userScoreLibrary : prevHigh;
 
-    // Add additional fields here as needed
-    
-    const dbReference= ref(DB, 'Public/' + userId);
-    update(dbReference, {
-        userScoreLibrary: userScoreLibrary,
-    }).then(() => {
-        console.log("Write successful!")
-    }).catch((error) => {
-        console.log("fail Writing")
+
+    update(userRef, {userScoreLibrary: userScoreLibrary,
+      userHighScoreLibrary: highScore}).then(() => {
+      console.log("written")
     });
+  });
+
 }
 
 
@@ -298,7 +302,55 @@ function fb_ReadSorted() {
     var sortKey = "userScoreLibrary";
     leaderboardSign.innerHTML = "You pressed the button!";
 
-    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(4));
+    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(10));
+
+     get(dbReference).then((snapshot) => 
+    {
+        // Do Stuff
+    });
+
+    get(dbReference).then((allScoreDataSnapshot) => {
+        allScoreDataSnapshot.forEach(function (userScoreSnapshot) {
+            var obj = userScoreSnapshot.val();
+            console.log(obj.userScoreLibrary);
+            console.log(obj.displayName)
+            Test.innerHTML = obj.displayName;
+            Test2.innerHTML = obj.userScoreLibrary;
+        });
+    });
+
+    get(dbReference).then((snapshot) => {
+
+        var fb_data = snapshot.val();
+
+      if (fb_data != null) {
+
+           //✅ Code for a successful sorted read goes here
+           console.log("Sorted Successfully");
+
+        } else {
+
+           //✅ Code for no record found goes here
+            console.log("Sorted Successfully, but no record");
+            
+
+        }
+
+    }).catch((error) => {
+
+        //❌ Code for a sorted read error goes here
+        console.log("Sorting failed");
+    });
+
+}
+
+function fb_ReadSortedCoin() {
+    console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
+    var sortKey = "userScoreCoin";
+    leaderboardSign.innerHTML = "Leaderboard: Coin Collector";
+
+    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(10));
 
      get(dbReference).then((snapshot) => 
     {
