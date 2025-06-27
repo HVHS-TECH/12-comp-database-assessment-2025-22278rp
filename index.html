@@ -13,7 +13,7 @@
     <!-- firebase start ****************************************-->
     <link type="text/css" rel="stylesheet" href="https://cdn.firebase.com/libs/firebaseui/3.5.2/firebaseui.css" />
     <!-- firebase end ******************************************-->
-     <!-- Your JS files & main module ***************************-->
+    <!-- Your JS files & main module ***************************-->
     <script type="module" src="./main.mjs"></script>
     <script type="module" src="./leaderboard.mjs"></script>
 </head>
@@ -24,64 +24,71 @@
 
 <body>
     <div class="grid-container">
-    <div class="grid-item item1">
-        <nav>
-        <button onclick="fb_initialise(); fb_authenticate(); fb_ReadSorted(); displayLeaderboard();">Login with Google</button>
-        <form id="userInfoForm">
-        <label for="name">Username:</label>
-        <input type="text" id="name" name="name" required />
-        <label for="name">Age:</label>
-        <input type="text" id="age" age="age" required />
-        <label for="name">Favourite Colour:</label>
-        <input type="text" id="colour" colour="colour" required />
-        </form>
-        <button onclick="fb_WriteRec(); fb_WriteRecPrivate()">Submit</button>
-        </nav>
-    </div>
-    <div class="grid-item item2">
-        <header>
-        <h1 style="font-family: 'Audiowide', sans-serif;">12COMP Database Project 2025- Ryan Parks</h1>
-        </header>
-    </div>
-   
-    <div class="grid-item item3">
-        <main>
-            <h1 class="intro">Welcome to my game library</h1>
-            <h3 id="leaderboardSign" >Leaderboards:</h3>
-            <button onclick="fb_ReadSorted(); ">Sort Library Labryinth Leaderboard</button>
-           <table>
-                <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Highscore</th> 
-                </tr>
-                </thead>
-                <tbody id = "highScoreTableLibrary">
+        <div class="grid-item item1">
+            <nav>
+                <button onclick="fb_initialise(); fb_authenticate(); fb_ReadSorted(); fb_ReadSortedCoin();">Login with
+                    Google</button>
+                <form id="userInfoForm">
+                    <label for="name">Username:</label>
+                    <input type="text" id="name" name="name" required />
+                    <label for="name">Age:</label>
+                    <input type="text" id="age" age="age" required />
+                    <label for="name">Favourite Colour:</label>
+                    <input type="text" id="colour" colour="colour" required />
+                </form>
+                <button onclick="fb_WriteRec(); fb_WriteRecPrivate()">Submit</button>
+            </nav>
+        </div>
+        <div class="grid-item item2">
+            <header>
+                <h1 style="font-family: 'Audiowide', sans-serif;">12COMP Database Project 2025- Ryan Parks</h1>
+            </header>
+        </div>
 
-                </tbody>
-            </table>
-            <button onclick="fb_ReadSortedCoin(); ">Sort Coin Collector Leaderboard</button>
-            <table>
-                <thead>
-                <tr>
-                    <th>Rank</th>
-                    <th>Name</th>
-                    <th>Highscore</th> 
-                </tr>
-                </thead>
-                <tbody id = "highScoreTableLibrary">
-                </tbody>
-            </table>
-        </main>
+        <div class="grid-item item3">
+            <main>
+                <h1 class="intro">Welcome to my game library</h1>
+                <h3 id="leaderboardSign">Leaderboards:</h3>
+                <button onclick="fb_ReadSorted(); ">Sort Library Labryinth Leaderboard</button>
+                <h3 id="leaderboardSign">Library Labryinth Leaderboard:</h3>
+                <!--this part was adjusted by chatgpt-->
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Highscore</th>
+                        </tr>
+                    </thead>
+                    <tbody id="highScoreTableLibrary">
+
+                    </tbody>
+                </table>
+
+                <h3>Coin Collector Leaderboard:</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Highscore</th>
+                        </tr>
+                    </thead>
+                    <tbody id="highScoreTableCoin">
+
+                    </tbody>
+                </table>
+            </main>
+        </div>
+        <div class="grid-item item4">
+            <footer>
+                <h2>Games created by Ryan Parks</h2>
+                <a href='https://docs.google.com/forms/d/e/1FAIpQLScFKs99v70FJJELcgJFrwooF0s6ykOLbbg-RDWyVmiaa3wdwg/viewform?usp=header'
+                    target="_blank">Feedback</a>
+            </footer>
+        </div>
     </div>
-    <div class="grid-item item4">
-     <footer>
-     <h2>Games created by Ryan Parks</h2>
-     <a href='https://docs.google.com/forms/d/e/1FAIpQLScFKs99v70FJJELcgJFrwooF0s6ykOLbbg-RDWyVmiaa3wdwg/viewform?usp=header' target = "_blank">Feedback</a>
-     </footer>
-     </div>
-</div>
+
 </html>
 <!--*************************************************************
   END OF INDEX.HTML

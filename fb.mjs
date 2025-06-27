@@ -213,7 +213,7 @@ function fb_writeScoreCoin(userScoreCoin) {
             userScoreCoin: userScoreCoin,
             userHighScoreCoin: highScore
         }).then(() => {
-            console.log("written")
+            console.log("Highscore updated")
         });
     });
 
@@ -237,7 +237,7 @@ function fb_writeScoreLibrary(userScoreLibrary) {
             userScoreLibrary: userScoreLibrary,
             userHighScoreLibrary: highScore
         }).then(() => {
-            console.log("written")
+            console.log("Highscore updated")
         });
     });
 
@@ -304,7 +304,50 @@ function fb_ReadAll() {
     });
 }
 
+
+//some parts of sorted read were improved by chatgpt, originally this could only display the 1st place on each leaderboard but chatgpt added it so it can account for all users
 function fb_ReadSorted() {
+  console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const DB = getDatabase();
+  const sortKey = "userHighScoreLibrary";
+  const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey)); 
+  const table = document.getElementById("highScoreTableLibrary");
+  table.innerHTML = ""; //added by chatgpt
+
+  get(dbReference).then((snapshot) => {
+    var rank = 1;//added by chatgpt
+    snapshot.forEach((userSnap) => {//added by chatgpt
+      var obj = userSnap.val();//chatgpt changed this a bit
+      table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.displayName + "</td><td>" + obj.userHighScoreLibrary + "</td></tr>";//updated by chatgpt
+      rank++;//added by chatgpt
+    });
+  }).catch((error) => {
+    console.log("Sorting failed", error);
+  });
+}
+
+//some parts of sorted read were improved by chatgpt, originally this could only display the 1st place on each leaderboard but chatgpt added it so it can account for all users
+function fb_ReadSortedCoin() {
+  console.log('%c fb_ReadSortedCoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+  const DB = getDatabase();
+  const sortKey = "userHighScoreCoin";
+  const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey));//chatgpt removed limit to first
+  const table = document.getElementById("highScoreTableCoin");
+  table.innerHTML = "";//added by chatgpt
+
+  get(dbReference).then((snapshot) => {
+    var rank = 1;//chatgpt added this
+    snapshot.forEach((userSnap) => {//chatgpt added this
+      var obj = userSnap.val();//chatgpt changed this a bit
+      table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.displayName + "</td><td>" + obj.userHighScoreCoin + "</td></tr>";//chatgpt updated this
+      rank++;//chatgpt added this
+    });
+  }).catch((error) => {
+    console.log("Sorting failed", error);
+  });
+}
+
+/*function fb_ReadSorted() {
     console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     var sortKey = "userScoreLibrary";
@@ -360,7 +403,7 @@ function fb_ReadSorted() {
 }
 
 function fb_ReadSortedCoin() {
-    console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    console.log('%c fb_ReadSortedCoin(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     var sortKey = "userScoreCoin";
     leaderboardSign.innerHTML = "You pressed the button!";
@@ -412,7 +455,7 @@ function fb_ReadSortedCoin() {
         console.log("Sorting failed");
     });
 
-}
+}*/
 
 function fb_DeleteRec() {
     console.log('%c fb_DeleteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
