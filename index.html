@@ -21,12 +21,11 @@
   BODY
 **************************************************************-->
 
-<body onload="fb_initialise();">
+<body onload="fb_initialise(); fb_detectLoginChange(); fb_ReadSortedLibrary(); fb_ReadSortedCoin();">
     <div class="grid-container">
         <div class="grid-item item1">
             <nav>
-                <button id = "loginButton" onclick="fb_initialise(); fb_authenticate(); fb_ReadSortedLibrary(); fb_ReadSortedCoin();">Login with Google</button>
-                <button onclick="fb_logout();">Logout</button>
+                <button id = "loginButton" onclick="fb_authenticate(); ">Login with Google</button>
                 <form id="userInfoForm">
                     <label for="name">Username:</label>
                     <input type="text" id="name" name="name" required />
@@ -46,10 +45,9 @@
 
         <div class="grid-item item3">
             <main>
-                <h1 class="intro">Welcome to my game library</h1>
+                <!--leaderboard to showcase all the highscores for each game for the user-->
                 <h3 id="leaderboardSign">Leaderboards:</h3>
                 <h3 id="leaderboardSign">Library Labryinth Leaderboard:</h3>
-                <!--this part was adjusted by chatgpt-->
                 <table>
                     <thead>
                         <tr>

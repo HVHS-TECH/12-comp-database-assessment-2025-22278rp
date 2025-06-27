@@ -87,9 +87,9 @@ function fb_detectLoginChange() {
             currentUser = user;
             userId = user.uid;
             console.log("✅ Logged in as:", user.email, user.displayName, user.photoURL);
+            loginButton.innerHTML = "Logged In";
         } else {
-            console.log("⚠️ Not logged in — redirecting to index.html");
-            location.href = "index.html";
+            console.log("⚠️ Not logged in");
         }
     }, (error) => {
         console.error("❌ Auth detection error:", error);
@@ -147,7 +147,11 @@ function fb_WriteRecPrivate() {
     var age = document.getElementById("age").value;
     var colour = document.getElementById("colour").value;
     if (!currentUser || age == "" || isNaN(age) || colour == "" || !isNaN(colour)) {
-        alert("You must be logged in and enter a valid name and age.")
+        alert("You must be logged in or enter a valid age.")
+        return;
+    }
+    if (!currentUser || colour == "" || !isNaN(colour)) {
+        alert("You must be logged in and enter a valid colour")
         return;
     }
     console.log('%c fb_WriteRecPrivate(): ',

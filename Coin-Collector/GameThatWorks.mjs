@@ -8,7 +8,7 @@ var coin;
 var gameState = "play";
 var score = 0;
 const COINSIZE = 10;
-const COIN_TIMEOUT = 5000;
+const COIN_TIMEOUT = 10000;
 const PLAYERSIZE = 20;
 
 
