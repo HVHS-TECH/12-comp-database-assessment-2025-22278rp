@@ -15,6 +15,7 @@
     <!-- firebase end ******************************************-->
      <!-- Your JS files & main module ***************************-->
     <script type="module" src="./main.mjs"></script>
+    <script type="module" src="./leaderboard.mjs"></script>
 </head>
 
 <!--*************************************************************
@@ -25,7 +26,7 @@
     <div class="grid-container">
     <div class="grid-item item1">
         <nav>
-        <button onclick="fb_initialise(); fb_authenticate(); fb_ReadSorted();">Login with Google</button>
+        <button onclick="fb_initialise(); fb_authenticate(); fb_ReadSorted(); displayLeaderboard();">Login with Google</button>
         <form id="userInfoForm">
         <label for="name">Username:</label>
         <input type="text" id="name" name="name" required />
@@ -48,17 +49,17 @@
             <h1 class="intro">Welcome to my game library</h1>
             <h3 id="leaderboardSign" >Leaderboards:</h3>
             <button onclick="fb_ReadSorted(); ">Sort Library Labryinth Leaderboard</button>
-            <table>
+           <table>
+                <thead>
                 <tr>
                     <th>Rank</th>
                     <th>Name</th>
                     <th>Highscore</th> 
                 </tr>
-                <tr id = "highScoreTableLibrary">
-                    <td>1</td>
-                    <td id = "Test">Null</td>
-                    <td id = "Test2">Null</td>
-                </tr>
+                </thead>
+                <tbody id = "highScoreTableLibrary">
+
+                </tbody>
             </table>
             <button onclick="fb_ReadSorted(); ">Sort Coin Collector Leaderboard</button>
             <table>
@@ -69,8 +70,7 @@
                     <th>Highscore</th> 
                 </tr>
                 </thead>
-                <tbody id = "highScoreTableCoin">
-
+                <tbody id = "highScoreTableLibrary">
                 </tbody>
             </table>
         </main>

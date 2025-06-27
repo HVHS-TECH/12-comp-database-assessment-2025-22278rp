@@ -20,7 +20,7 @@ var userId = null;
 // Import all the methods you want to call from the firebase modules
 import { initializeApp }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getDatabase, ref, get, update, query, orderByChild, limitToFirst, remove }
+import { getDatabase, ref, get, update, query, orderByChild, limitToLast, remove }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -29,7 +29,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_WriteRecPrivate, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_ReadSortedCoin, fb_DeleteRec }
+export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_WriteRecPrivate, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_DeleteRec }
 
 function fb_initialise() {
     console.log('%c fb_initialise(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -88,7 +88,7 @@ function fb_detectLoginChange() {
             console.log("✅ Logged in as:", user.email, user.displayName, user.photoURL);
         } else {
             console.log("⚠️ Not logged in — redirecting to index.html");
-            location.href = "index.html"; 
+            location.href = "index.html";
         }
     }, (error) => {
         console.error("❌ Auth detection error:", error);
@@ -113,83 +113,85 @@ function fb_logout() {
 }
 
 function fb_WriteRec() {
-  const AUTH = getAuth();
-  var name = document.getElementById("name").value;
-  if (!currentUser || name == "" || name == null ) {alert("You must be logged in and enter a valid name.")
-  return;
-  }
-  
-  console.log('%c fb_WriteRec(): ',
-    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-  const DB = getDatabase()
-  
-  const dbReference = ref(DB, "Public/" + userId);
-  
-  update(dbReference, { displayName: name }).then(() => {
+    const AUTH = getAuth();
+    var name = document.getElementById("name").value;
+    if (!currentUser || name == "" || name == null) {
+        alert("You must be logged in and enter a valid name.")
+        return;
+    }
 
-    //✅ Code for a successful write goes here
-    console.log("successful write")
-    
-    
-  }).catch((error) => {
+    console.log('%c fb_WriteRec(): ',
+        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
 
-    //❌ Code for a write error goes here
-    console.log("Writing error")
-  });
+    const dbReference = ref(DB, "Public/" + userId);
+
+    update(dbReference, { displayName: name }).then(() => {
+
+        //✅ Code for a successful write goes here
+        console.log("successful write")
+
+
+    }).catch((error) => {
+
+        //❌ Code for a write error goes here
+        console.log("Writing error")
+    });
 
 
 }
 
 function fb_WriteRecPrivate() {
-  const AUTH = getAuth();
-  var age = document.getElementById("age").value;
-  var colour = document.getElementById("colour").value;
-  if (!currentUser || age == "" || isNaN(age) || colour == "" || !isNaN(colour)) {alert("You must be logged in and enter a valid name and age.")
-  return;
-  }
-  console.log('%c fb_WriteRecPrivate(): ',
-    'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-  const DB = getDatabase()
-  
-  const dbReference = ref(DB, "Private/" + userId);
-  
-  update(dbReference, { Age: age, Colour: colour }).then(() => {
+    const AUTH = getAuth();
+    var age = document.getElementById("age").value;
+    var colour = document.getElementById("colour").value;
+    if (!currentUser || age == "" || isNaN(age) || colour == "" || !isNaN(colour)) {
+        alert("You must be logged in and enter a valid name and age.")
+        return;
+    }
+    console.log('%c fb_WriteRecPrivate(): ',
+        'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    const DB = getDatabase()
 
-    //✅ Code for a successful write goes here
-    console.log("successful write")
-    
-    
-  }).catch((error) => {
+    const dbReference = ref(DB, "Private/" + userId);
 
-    //❌ Code for a write error goes here
-    console.log("Writing error")
-  });
+    update(dbReference, { Age: age, Colour: colour }).then(() => {
 
-  //Collects data of the user's google account
+        //✅ Code for a successful write goes here
+        console.log("successful write")
 
-  onAuthStateChanged(AUTH, (user) => {
+
+    }).catch((error) => {
+
+        //❌ Code for a write error goes here
+        console.log("Writing error")
+    });
+
+    //Collects data of the user's google account
+
+    onAuthStateChanged(AUTH, (user) => {
         if (user) {
             currentUser = user;
             userId = user.uid;
             console.log("✅ Logged in as:", user.email, "Name:", user.displayName, user.photoURL);
-            update(dbReference, { Email: user.email, profilepicture: user.photoURL, Name: user.displayName}).then(() => {
-              location.href='gameMenu.html'
-    //✅ Code for a successful write goes here
-    console.log("Google login completed")
-    
-  }).catch((error) => {
+            update(dbReference, { Email: user.email, profilepicture: user.photoURL, Name: user.displayName }).then(() => {
+                location.href = 'gameMenu.html'
+                //✅ Code for a successful write goes here
+                console.log("Google login completed")
 
-    //❌ Code for a write error goes here
-    console.log("Google login error")
-  });
+            }).catch((error) => {
+
+                //❌ Code for a write error goes here
+                console.log("Google login error")
+            });
         } else {
             console.log("⚠️ Not logged in — redirecting to index.html");
-            location.href = "index.html"; 
+            location.href = "index.html";
         }
     },
-    (error) => {
-        console.error("❌ Auth detection error:", error);
-    });
+        (error) => {
+            console.error("❌ Auth detection error:", error);
+        });
 }
 
 //Writing the score for the game: Coin Collector to the database
@@ -207,11 +209,13 @@ function fb_writeScoreCoin(userScoreCoin) {
         const highScore = userScoreCoin > prevHigh ? userScoreCoin : prevHigh;
 
 
-    update(userRef, {userScoreCoin: userScoreCoin,
-      userHighScoreCoin: highScore}).then(() => {
-      console.log("written")
+        update(userRef, {
+            userScoreCoin: userScoreCoin,
+            userHighScoreCoin: highScore
+        }).then(() => {
+            console.log("written")
+        });
     });
-  });
 
 }
 //Writing the score for the game: Library Labryinth to the database
@@ -229,11 +233,13 @@ function fb_writeScoreLibrary(userScoreLibrary) {
         const highScore = userScoreLibrary > prevHigh ? userScoreLibrary : prevHigh;
 
 
-    update(userRef, {userScoreLibrary: userScoreLibrary,
-      userHighScoreLibrary: highScore}).then(() => {
-      console.log("written")
+        update(userRef, {
+            userScoreLibrary: userScoreLibrary,
+            userHighScoreLibrary: highScore
+        }).then(() => {
+            console.log("written")
+        });
     });
-  });
 
 }
 
@@ -241,7 +247,7 @@ function fb_writeScoreLibrary(userScoreLibrary) {
 function fb_ReadRec() {
     console.log('%c fb_ReadRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    const dbReference= ref(DB, "UIDs/Name");
+    const dbReference = ref(DB, "UIDs/Name");
 
     get(dbReference).then((snapshot) => {
 
@@ -269,9 +275,9 @@ function fb_ReadRec() {
 }
 
 function fb_ReadAll() {
-     console.log('%c fb_ReadAll(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    console.log('%c fb_ReadAll(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
-    const dbReference= ref(DB, "UIDs/" + userId);
+    const dbReference = ref(DB, "UIDs/" + userId);
 
     get(dbReference).then((snapshot) => {
 
@@ -304,10 +310,17 @@ function fb_ReadSorted() {
     var sortKey = "userScoreLibrary";
     leaderboardSign.innerHTML = "You pressed the button!";
 
-    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(10));
+    const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey), limitToLast(10));
 
-     get(dbReference).then((snapshot) => 
-    {
+    return new Promise((resolve, reject) => {
+        get(dbReference).then((snapshot) => {
+            resolve(snapshot.val());
+        }).catch((error) => {
+            reject(error);
+        })
+    })
+
+    get(dbReference).then((snapshot) => {
         // Do Stuff
     });
 
@@ -325,16 +338,16 @@ function fb_ReadSorted() {
 
         var fb_data = snapshot.val();
 
-      if (fb_data != null) {
+        if (fb_data != null) {
 
-           //✅ Code for a successful sorted read goes here
-           console.log("Sorted Successfully");
+            //✅ Code for a successful sorted read goes here
+            console.log("Sorted Successfully");
 
         } else {
 
-           //✅ Code for no record found goes here
+            //✅ Code for no record found goes here
             console.log("Sorted Successfully, but no record");
-            
+
 
         }
 
@@ -346,92 +359,33 @@ function fb_ReadSorted() {
 
 }
 
-/*function fb_ReadSorted() {
-    console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase();
-    var sortKey = "userHighScoreLibrary";  // Use the key where highscores are saved, probably userHighScoreLibrary
-    const leaderboardSign = document.getElementById("leaderboardSign");
-    leaderboardSign.innerHTML = "Library Labyrinth Leaderboard";
-
-    const highScoreTableBody = document.getElementById("highScoreTableLibraryBody");
-
-    // Clear existing rows before adding new ones
-    highScoreTableBody.innerHTML = "";
-
-    // Query top 10 scores sorted by userHighScoreLibrary DESCENDING
-    // Firebase RTDB doesn't support descending order directly,
-    // so you query ascending and reverse in JS.
-
-    const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey), limitToFirst(10));
-
-    get(dbReference).then((snapshot) => {
-        let scores = [];
-
-        snapshot.forEach(userSnap => {
-            const val = userSnap.val();
-            if (val[sortKey] != null) {  // Only include if score exists
-                scores.push({
-                    name: val.displayName || "Anonymous",
-                    score: val[sortKey]
-                });
-            }
-        });
-
-        // Sort scores descending (high to low)
-        scores.sort((a, b) => b.score - a.score);
-
-        // Add rows to table
-        scores.forEach((entry, index) => {
-            const row = document.createElement("tr");
-
-            const rankCell = document.createElement("td");
-            rankCell.textContent = index + 1;
-            row.appendChild(rankCell);
-
-            const nameCell = document.createElement("td");
-            nameCell.textContent = entry.name;
-            row.appendChild(nameCell);
-
-            const scoreCell = document.createElement("td");
-            scoreCell.textContent = entry.score;
-            row.appendChild(scoreCell);
-
-            highScoreTableBody.appendChild(row);
-        });
-
-        if (scores.length === 0) {
-            // If no scores, show a placeholder row
-            const row = document.createElement("tr");
-            const noDataCell = document.createElement("td");
-            noDataCell.colSpan = 3;
-            noDataCell.textContent = "No scores found.";
-            row.appendChild(noDataCell);
-            highScoreTableBody.appendChild(row);
-        }
-
-        console.log("Leaderboard updated");
-    }).catch((error) => {
-        console.error("Error reading leaderboard:", error);
-    });
-}
-
-function fb_ReadSortedCoin() {
+function fb_ReadSorted() {
     console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
     var sortKey = "userScoreCoin";
-    leaderboardSign.innerHTML = "Leaderboard: Coin Collector";
+    leaderboardSign.innerHTML = "You pressed the button!";
 
-    const dbReference= query(ref(DB, "Public/" ), orderByChild(sortKey), limitToFirst(10));
+    const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey), limitToLast(10));
 
-     get(dbReference).then((snapshot) => 
-    {
+    return new Promise((resolve, reject) => {
+        get(dbReference).then((snapshot) => {
+            resolve(snapshot.val());
+        }).catch((error) => {
+            reject(error);
+        })
+    })
+
+    get(dbReference).then((snapshot) => {
         // Do Stuff
     });
 
     get(dbReference).then((allScoreDataSnapshot) => {
         allScoreDataSnapshot.forEach(function (userScoreSnapshot) {
             var obj = userScoreSnapshot.val();
-            console.log(obj);
+            console.log(obj.userScoreCoin);
+            console.log(obj.displayName)
+            Test.innerHTML = obj.displayName;
+            Test2.innerHTML = obj.userScoreCoin;
         });
     });
 
@@ -439,17 +393,16 @@ function fb_ReadSortedCoin() {
 
         var fb_data = snapshot.val();
 
-      if (fb_data != null) {
+        if (fb_data != null) {
 
-           //✅ Code for a successful sorted read goes here
-           console.log("Sorted Successfully");
-           console.log(fb_data);
+            //✅ Code for a successful sorted read goes here
+            console.log("Sorted Successfully");
 
         } else {
 
-           //✅ Code for no record found goes here
+            //✅ Code for no record found goes here
             console.log("Sorted Successfully, but no record");
-            
+
 
         }
 
@@ -459,13 +412,13 @@ function fb_ReadSortedCoin() {
         console.log("Sorting failed");
     });
 
-}*/
+}
 
 function fb_DeleteRec() {
     console.log('%c fb_DeleteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
 
-    const dbReference= ref(DB, "UIDs/"  + userId);
+    const dbReference = ref(DB, "UIDs/" + userId);
 
     remove(dbReference).then(() => {
 
