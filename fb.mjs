@@ -315,9 +315,13 @@ function fb_ReadSorted() {
   table.innerHTML = ""; //added by chatgpt
 
   get(dbReference).then((snapshot) => {
-    var rank = 1;//added by chatgpt
-    snapshot.forEach((userSnap) => {//added by chatgpt
-      var obj = userSnap.val();//chatgpt changed this a bit
+    var rank = 1;
+    const users = []; 
+    snapshot.forEach((userSnap) => { 
+      users.push(userSnap.val());
+    });
+    users.reverse(); 
+    users.forEach((obj) => {
       table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.displayName + "</td><td>" + obj.userHighScoreLibrary + "</td></tr>";//updated by chatgpt
       rank++;//added by chatgpt
     });
@@ -325,6 +329,8 @@ function fb_ReadSorted() {
     console.log("Sorting failed", error);
   });
 }
+
+
 
 //some parts of sorted read were improved by chatgpt, originally this could only display the 1st place on each leaderboard but chatgpt added it so it can account for all users
 function fb_ReadSortedCoin() {
@@ -335,14 +341,19 @@ function fb_ReadSortedCoin() {
   const table = document.getElementById("highScoreTableCoin");
   table.innerHTML = "";//added by chatgpt
 
-  get(dbReference).then((snapshot) => {
-    var rank = 1;//chatgpt added this
-    snapshot.forEach((userSnap) => {//chatgpt added this
-      var obj = userSnap.val();//chatgpt changed this a bit
+    get(dbReference).then((snapshot) => {
+    var rank = 1;
+    const users = []; 
+    snapshot.forEach((userSnap) => { //added by ChatGpt
+      users.push(userSnap.val());//added by ChatGpt
+    });
+    users.reverse(); 
+    users.forEach((obj) => {
       table.innerHTML += "<tr><td>" + rank + "</td><td>" + obj.displayName + "</td><td>" + obj.userHighScoreCoin + "</td></tr>";//chatgpt updated this
       rank++;//chatgpt added this
     });
   }).catch((error) => {
+     //❌ Code for a sorted read error goes here
     console.log("Sorting failed", error);
   });
 }

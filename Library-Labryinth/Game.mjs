@@ -436,7 +436,7 @@ function mouseInteractBackButton() {
 		backButton.addAni({ w: 16, h: 16, row: 0, col: 0, });
 	}
 	if (backButton.mouse.pressing()) {
-		window.location.href = "index.html"; //sends you to the title screen
+		window.location.href = "indexLibrary.html"; //sends you to the title screen
 	}
 }
 
