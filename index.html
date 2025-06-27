@@ -25,8 +25,8 @@
     <div class="grid-container">
         <div class="grid-item item1">
             <nav>
-                <button onclick="fb_initialise(); fb_authenticate(); fb_ReadSorted(); fb_ReadSortedCoin();">Login with
-                    Google</button>
+                <button id = "loginButton" onclick="fb_initialise(); fb_authenticate(); fb_ReadSortedLibrary(); fb_ReadSortedCoin();">Login with Google</button>
+                <button onclick="fb_logout();">Logout</button>
                 <form id="userInfoForm">
                     <label for="name">Username:</label>
                     <input type="text" id="name" name="name" required />
@@ -83,6 +83,7 @@
                 <h2>Games created by Ryan Parks</h2>
                 <a href='https://docs.google.com/forms/d/e/1FAIpQLScFKs99v70FJJELcgJFrwooF0s6ykOLbbg-RDWyVmiaa3wdwg/viewform?usp=header'
                     target="_blank">Feedback</a>
+                    <button onclick="fb_DeleteRec();">Delete private data</button>
             </footer>
         </div>
     </div>

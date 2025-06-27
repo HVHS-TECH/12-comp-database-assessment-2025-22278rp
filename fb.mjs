@@ -20,7 +20,7 @@ var userId = null;
 // Import all the methods you want to call from the firebase modules
 import { initializeApp }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js";
-import { getDatabase, ref, get, update, query, orderByChild, limitToLast, remove }
+import { getDatabase, ref, get, update, query, orderByChild, remove }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-database.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut }
     from "https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js";
@@ -29,7 +29,7 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signO
 // EXPORT FUNCTIONS
 // List all the functions called by code or html outside of this module
 /**************************************************************/
-export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_WriteRecPrivate, fb_ReadRec, fb_ReadAll, fb_ReadSorted, fb_ReadSortedCoin, fb_DeleteRec }
+export { fb_writeScoreCoin, fb_writeScoreLibrary, fb_initialise, fb_authenticate, fb_detectLoginChange, fb_logout, fb_WriteRec, fb_WriteRecPrivate, fb_ReadSortedLibrary, fb_ReadSortedCoin, fb_DeleteRec }
 
 function fb_initialise() {
     console.log('%c fb_initialise(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
@@ -53,6 +53,7 @@ function fb_initialise() {
 
 function fb_authenticate() {
     console.log('%c fb_authenticate(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+    loginButton.innerHTML = "Logged In";
     const AUTH = getAuth();
     const PROVIDER = new GoogleAuthProvider();
     // The following makes Google ask the user to select the account
@@ -243,71 +244,9 @@ function fb_writeScoreLibrary(userScoreLibrary) {
 
 }
 
-
-function fb_ReadRec() {
-    console.log('%c fb_ReadRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    const dbReference = ref(DB, "UIDs/Name");
-
-    get(dbReference).then((snapshot) => {
-
-        var fb_data = snapshot.val();
-
-        if (fb_data != null) {
-
-            //✅ Code for a successful read goes here
-            console.log("successful read");
-            console.log(fb_data);
-        } else {
-
-            //✅ Code for no record found goes here
-            console.log("no record found");
-            console.log(fb_data);
-        }
-
-    }).catch((error) => {
-
-        //❌ Code for a read error goes here
-        console.log("fail read");
-        console.log(fb_data);
-
-    });
-}
-
-function fb_ReadAll() {
-    console.log('%c fb_ReadAll(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
-    const DB = getDatabase()
-    const dbReference = ref(DB, "UIDs/" + userId);
-
-    get(dbReference).then((snapshot) => {
-
-        var fb_data = snapshot.val();
-
-        if (fb_data != null) {
-
-            //✅ Code for a successful read all goes here
-            console.log("Successfully read all");
-            console.log(fb_data);
-        } else {
-
-            //✅ Code for no record found goes here
-            console.log("no record");
-            console.log(fb_data);
-
-        }
-
-    }).catch((error) => {
-
-        //❌ Code for a read all error goes here
-        console.log("error not read all");
-        console.log(fb_data);
-    });
-}
-
-
 //some parts of sorted read were improved by chatgpt, originally this could only display the 1st place on each leaderboard but chatgpt added it so it can account for all users
-function fb_ReadSorted() {
-  console.log('%c fb_ReadSorted(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
+function fb_ReadSortedLibrary() {
+  console.log('%c fb_ReadSortedLibrary(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
   const DB = getDatabase();
   const sortKey = "userHighScoreLibrary";
   const dbReference = query(ref(DB, "Public/"), orderByChild(sortKey)); 
@@ -472,7 +411,7 @@ function fb_DeleteRec() {
     console.log('%c fb_DeleteRec(): ', 'color: ' + COL_C + '; background-color: ' + COL_B + ';');
     const DB = getDatabase()
 
-    const dbReference = ref(DB, "UIDs/" + userId);
+    const dbReference = ref(DB, "Private/" + userId);
 
     remove(dbReference).then(() => {
 
