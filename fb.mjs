@@ -116,7 +116,7 @@ function fb_logout() {
 function fb_WriteRec() {
     const AUTH = getAuth();
     var name = document.getElementById("name").value;
-    if (!currentUser || name == "" || name == null) {
+    if (!currentUser || name == "" || name == null || !isNaN(name)) {
         alert("You must be logged in and enter a valid name.")
         return;
     }
